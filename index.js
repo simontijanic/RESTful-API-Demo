@@ -2,13 +2,20 @@ require("dotenv").config();
 
 const express = require("express");
 const session = require("express-session");
+const cors = require("cors");
 
 const app = express();
 
+
+app.use(express.json())
+app.use(cors());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 600000 * 60,
+    },
 }));
 
 const userRoute = require("./routes/userRoute")
